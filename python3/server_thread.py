@@ -35,7 +35,7 @@ class ServerThread:
             try:
                 # start http server for browser
                 hh = http_handler.GhostTextHttpHandlerFactory(8765)
-                http_svr = tcp_server.TcpServer(loop, hh)
+                http_svr = tcp_server.TcpServer(hh)
                 try:
                     http_svr.start()
                 except:
@@ -46,7 +46,7 @@ class ServerThread:
                 # start tcp server for vim channel to connect
                 ch = vim_channel_handler.Channel(
                     ex.channel_rx_coro())
-                ch_svr = tcp_server.TcpServer(loop, ch)
+                ch_svr = tcp_server.TcpServer(ch)
                 try:
                     ch_svr.start(host='localhost', port='4002')
                 except:

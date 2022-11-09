@@ -6,16 +6,16 @@ class TcpServer:
     '''Async TcpServer
     '''
 
-    def __init__(self, loop, handler_factory):
+    def __init__(self, handler_factory):
         '''  Create a TcpServer with an event loop and message handler
         handler is a async function which get data and return result
         '''
-        self.loop = loop
+        self.loop = asyncio.get_event_loop()
         self.handler_factory = handler_factory
 
     def start(self, host='localhost', port='4001'):
         coro = asyncio.start_server(
-            self.handler_factory.handler(), host, port, loop=self.loop)
+            self.handler_factory.handler(), host, port)
         self.server = self.loop.run_until_complete(coro)
         ghost_log.p('server listen on {}:{}'.format(host, port))
 
